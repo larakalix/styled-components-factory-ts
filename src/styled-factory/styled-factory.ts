@@ -1,8 +1,9 @@
 import { createElement } from 'react';
 import { tags } from '../tags/tags';
 
-const HEAD = document.head || document.getElementsByTagName('head')[0];
-const STYLE = document.createElement('style');
+const HEAD: HTMLHeadElement =
+  document.head || document.getElementsByTagName('head')[0];
+const STYLE: any = document.createElement('style');
 HEAD.appendChild(STYLE);
 
 const genRandomName = () =>
@@ -11,7 +12,11 @@ const genRandomName = () =>
     .replace(/[^a-z]+/g, '')
     .substr(0, 5);
 
-const defaultTemplateLiteralFunction = (strings, ...values) => {
+const defaultTemplateLiteralFunction = (
+  strings: TemplateStringsArray,
+  props: any,
+  ...values: Function | any
+) => {
   return strings.reduce((acc, key, index) => {
     acc += key;
     if (!values[index]) {
@@ -27,7 +32,7 @@ const defaultTemplateLiteralFunction = (strings, ...values) => {
   }, '');
 };
 
-const appendCss = (styles, type) => {
+const appendCss = (styles: string, type: string) => {
   const cssClassName = `${type}tag-${genRandomName()}`;
   const css = `.${cssClassName}{${styles}}`;
 
@@ -40,9 +45,13 @@ const appendCss = (styles, type) => {
 export const styled = tags.reduce(
   (acc, { tag: key }) =>
     Object.assign(acc, {
-      [key]: (strings, ...values) => {
-        return (props) => {
-          const styles = defaultTemplateLiteralFunction(strings, ...values)
+      [key]: (strings: TemplateStringsArray, ...values: Function | any) => {
+        return (props: any) => {
+          const styles = defaultTemplateLiteralFunction(
+            strings,
+            props,
+            ...values
+          )
             .trim()
             .replace(/\n/gi, '');
 
