@@ -13,7 +13,7 @@ const genRandomName = () =>
     .substr(0, 5);
 
 const defaultTemplateLiteralFunction = (
-  strings: TemplateStringsArray,
+  strings: React.CSSProperties[],
   props: any,
   ...values: Function | any
 ) => {
@@ -46,7 +46,7 @@ export const styled = tags.reduce(
   (acc, { tag: key }) =>
     Object.assign(acc, {
       [key]: (strings: TemplateStringsArray, ...values: Function | any) => {
-        return (props: any) => {
+        return (props: any): JSX.Element | null => {
           const styles = defaultTemplateLiteralFunction(
             strings,
             props,
