@@ -1,68 +1,79 @@
-import { createElement } from 'react';
-import { tags } from '../tags/tags';
+import React, { createElement } from "react";
+import { genRandomName } from "../helpers/helpers";
+
+import { Tag, tags } from "../tags/tags";
 
 const HEAD: HTMLHeadElement =
-  document.head || document.getElementsByTagName('head')[0];
-const STYLE: any = document.createElement('style');
+    document.head || document.getElementsByTagName("head")[0];
+const STYLE: any = document.createElement("style");
 HEAD.appendChild(STYLE);
 
-const genRandomName = () =>
-  Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, '')
-    .substring(0, 5);
-
 const defaultTemplateLiteralFunction = (
-  strings: React.CSSProperties[],
-  props: any,
-  ...values: Function | any
+    strings: TemplateStringsArray,
+    props: any,
+    ...values: Function | any
 ) => {
-  return strings.reduce((acc, key, index) => {
-    acc += key;
-    if (!values[index]) {
-      acc += '';
-      return acc;
-    }
+    return strings.reduce((acc, key, index) => {
+        acc += key;
+        if (!values[index]) {
+            acc += "";
+            return acc;
+        }
 
-    acc +=
-      typeof values[index] === 'function'
-        ? values[index](props)
-        : values[index];
-    return acc;
-  }, '');
+        acc +=
+            typeof values[index] === "function"
+                ? values[index](props)
+                : values[index];
+        return acc;
+    }, "");
 };
 
 const appendCss = (styles: string, type: string) => {
-  const cssClassName = `${type}tag-${genRandomName()}`;
-  const css = `.${cssClassName}{${styles}}`;
+    const cssClassName = `${type}tag-${genRandomName()}`;
+    const css = `.${cssClassName}{${styles}}`;
 
-  if (STYLE.styleSheet) STYLE.styleSheet.cssText = css;
-  else STYLE.appendChild(document.createTextNode(css));
+    if (STYLE.styleSheet) STYLE.styleSheet.cssText = css;
+    else STYLE.appendChild(document.createTextNode(css));
 
-  return cssClassName;
+    return cssClassName;
 };
 
-export const styled = tags.reduce(
-  (acc, { tag: key }) =>
-    Object.assign(acc, {
-      [key]: (strings: React.CSSProperties[], ...values: Function | any) => {
-        return (props: any): JSX.Element | null => {
-          const styles = defaultTemplateLiteralFunction(
-            strings,
-            props,
-            ...values
-          )
-            .trim()
-            .replace(/\n/gi, '');
+const init = (tags: Tag[]) => {
+    return tags.reduce(
+        (acc, { tag: key }) =>
+            Object.assign(acc, {
+                [key]: (
+                    strings: TemplateStringsArray,
+                    ...values: Function | any
+                ) => {
+                    return (props: any): JSX.Element | null => {
+                        const styles = defaultTemplateLiteralFunction(
+                            strings,
+                            props,
+                            ...values
+                        )
+                            .trim()
+                            .replace(/\n/gi, "");
 
-          if (!styles) return null;
+                        if (!styles) return null;
 
-          return createElement(key, {
-            ...props,
-            className: appendCss(styles, key),
-          });
-        };
-      },
-    }),
-  {}
-);
+                        return createElement(key, {
+                            ...props,
+                            key: `${key}-${genRandomName()}`,
+                            className: appendCss(styles, key),
+                        }) as JSX.Element;
+                    };
+                },
+            }),
+        {}
+    );
+};
+
+interface Style {
+    [key: string]: (
+        strings: TemplateStringsArray,
+        ...values: Function | any
+    ) => React.FC<any>;
+}
+
+export const styled: Style = init(tags);
