@@ -34,15 +34,19 @@ export const Card = styled.div`
 export const CardTitle = styled.h1`
     color: ${green};
     text-transform: uppercase;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
+    margin: 0;
+    margin-top: 2rem;
 `;
 
 export const CardSummary = styled.p`
     color: white;
-    font-size: 2rem;
-    padding: 0 3rem;
+    font-size: 1.4rem;
+    padding-inline: 1rem;
     padding-top: 0;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #565f71;
+    margin-bottom: 3rem;
 `;
 
 export const CardFooter = styled.a`
