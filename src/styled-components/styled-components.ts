@@ -8,7 +8,7 @@ const green = "#52fdae";
 export const Body = styled.div`
     background-color: ${red};
     width: 100%;
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
