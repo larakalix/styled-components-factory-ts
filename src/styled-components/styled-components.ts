@@ -1,15 +1,11 @@
 import { styled } from "../styled-factory/styled-factory";
 
-const red = "tomato";
+const red = "#1f2632";
 const size = "1.2rem";
 const rad = "0.25rem";
+const green = "#52fdae";
 
-export const Footer = styled.footer`
-    background-color: gray;
-    color: black;
-`;
-
-export const StyledDiv = styled.div`
+export const Body = styled.div`
     background-color: ${red};
     width: 100%;
     min-height: 90vh;
@@ -21,37 +17,46 @@ export const StyledDiv = styled.div`
     font-size: ${size};
 `;
 
-export const StyledList = styled.ul`
-    background-color: greenyellow;
-    padding: 2rem;
+export const Card = styled.div`
+    position: relative;
+    background-color: #313a4a;
     border-radius: ${rad};
-`;
-
-export const StyledSection = styled.section`
-    background-color: blue;
-    padding: 12px 20px;
-    color: white;
-    border-radius: ${rad};
-    margin-bottom: 4rem;
-`;
-
-export const StyledA = styled.a`
-    display: block;
-    color: white;
-    background-color: #000;
-    border-radius: ${rad};
-    margin-top: 1rem;
-    padding: 10px 20px;
-    margin-bottom: 2srem;
-`;
-
-export const StyledP = styled.p`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 30px;
-    color: purple;
-    background-color: red;
-    border-radius: ${rad};
-    user-select: none;
-    max-width: 70vw;
-    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 40vw;
+    padding: 1rem 2rem;
+`;
+
+export const CardTitle = styled.h1`
+    color: ${green};
+    text-transform: uppercase;
+    font-size: 1.2rem;
+`;
+
+export const CardSummary = styled.p`
+    color: white;
+    font-size: 2rem;
+    padding: 0 3rem;
+    padding-top: 0;
+    padding-bottom: 1rem;
+`;
+
+export const CardFooter = styled.a`
+    position: absolute;
+    bottom: -2rem;
+    background-color: ${green};
+    border-radius: 50%;
+    color: ${red};
+    width: 4rem;
+    height: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 `;
